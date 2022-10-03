@@ -1,13 +1,13 @@
 const { connect } = require("../db/connection");
 const inquirer = require('inquirer');
 
-
+// selects all departments in database
 async function getDepartment() {
     const db = await connect();
     const [departments] = await db.query('SELECT * FROM departments');
     return departments;
 }
-
+// exports data within department from database as object with name and value
 async function getDepID() {
     const dept = await getDepartment();
     const deptChoice = [];
@@ -20,11 +20,12 @@ async function getDepID() {
     });
     return deptChoice;
 }
+// adds a department to database
 async function addDepartment(department) {
     const db = await connect();
     await db.query('INSERT INTO `employee_tracker`.`departments` (`department`) VALUES (?)', department);
 }
-
+// gets all employees within a database for export
 async function viewByDepartment(department) {
 
   const db = await connect();
@@ -38,6 +39,7 @@ async function viewByDepartment(department) {
 	const [empInDept] = await db.query(query, [department]);
   return empInDept;
 }
+// gets total value of employees salaries eithin selected department and exports as array
 async function viewDeptBudget(department) {
 
   const db = await connect();
@@ -50,4 +52,4 @@ async function viewDeptBudget(department) {
 	const [deptBudget] = await db.query(query, [department]);
   return deptBudget;
 }
-module.exports = { getDepartment, addDepartment, getDepID, viewByDepartment, viewDeptBudget};
+module.exports = { getDepartment, addDepartment, getDepID, viewByDepartment, viewDeptBudget}; // exports functions

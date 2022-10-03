@@ -1,3 +1,5 @@
+// imports
+
 const { getRandomValues } = require("crypto");
 const inquirer = require("inquirer");
 const { getDepartment } = require('./modules/department');
@@ -16,7 +18,7 @@ const { viewByManager } = require('./modules/employee');
 const { getEmpName } = require('./modules/employee');
 
 
-
+// task selection menu
 async function main() {
     return await inquirer.prompt([
         {
@@ -67,7 +69,7 @@ async function main() {
             when: (answer) => answer.task === 'view department budget',
         }
     ])
-    .then(async (answer) => {
+    .then(async (answer) => { // each task directs the user to the relevant imported function to complete the specified task
         switch(answer.task){
             case 'view all departments':
                 const departments = await getDepartment();
@@ -116,7 +118,7 @@ async function main() {
             case 'exit':
                 process.exit(0);
         }
-        await main();
+        await main(); // once task completed, open primary menu again
     })
 }
-main();
+main(); // start app

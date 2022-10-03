@@ -3,12 +3,14 @@ const inquirer = require('inquirer');
 const { getTitle } = require('../modules/role');
 const { default: Choices } = require("inquirer/lib/objects/choices");
 
+// gets all employees within database
 async function getEmployee() {
     const db = await connect();
     const [employees] = await db.query('SELECT * FROM employees');
     return employees;
     
 }
+// gets all employees incluyding role and department sections and exports as array
 async function dispEmployee() {
     const db = await connect();
 
@@ -19,6 +21,7 @@ async function dispEmployee() {
     JOIN departments d ON r.department_id = d.id`);
     return employees;
 }
+// exports data within employee from database as object with name and value
 async function getEmpName() {
     const emp = await getEmployee();
     const empChoice = [];
@@ -36,6 +39,7 @@ async function getEmpName() {
     empChoice.push(qObj);
     return empChoice;
 }
+// adds employee to database
 async function addEmployee() {
     await inquirer.prompt([
         {
@@ -72,6 +76,7 @@ async function addEmployee() {
 
     })
 }
+// updates role of selected employee
 async function updateEmployee() {
     await inquirer.prompt([
 		{
@@ -92,6 +97,7 @@ async function updateEmployee() {
         await db.query(`UPDATE employees SET role_id = ? WHERE id = ?`, [answer.role, answer.employee]);
     })
 }
+// updates manager of selected employee
 async function updateManager() {
 	await inquirer.prompt([
 		{
@@ -112,7 +118,7 @@ async function updateManager() {
 		db.query(`UPDATE employees SET manager_id = ? WHERE id = ?`, [answer.manager, answer.employee]);
 	})
 }
-
+// gets all employees with specified manager id and exportsd as array
 async function viewByManager(manager) {
 
     const db = await connect();
@@ -126,7 +132,7 @@ async function viewByManager(manager) {
     const [viewManagers] = await db.query(query, [manager]);
     return viewManagers;
   }
-
+// delets an employee from database
   async function deleteEmployee() {
 	await inquirer.prompt([
 		{
@@ -142,4 +148,4 @@ async function viewByManager(manager) {
   })
 }
 
-module.exports = { getEmployee, addEmployee, dispEmployee, getEmpName, updateEmployee, updateManager, viewByManager, deleteEmployee};
+module.exports = { getEmployee, addEmployee, dispEmployee, getEmpName, updateEmployee, updateManager, viewByManager, deleteEmployee}; // exports functions
