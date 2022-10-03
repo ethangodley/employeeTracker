@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "inquirer": "^8.0.0",
+    "mysql2": "^2.3.3",
+    "node": "^18.7.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
+    "dotenv": "^16.0.1"
+  },
+  "name": "employeetracker",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node db/seeds/seed.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
